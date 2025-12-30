@@ -8,6 +8,20 @@ app_license = "mit"
 # Apps
 # ------------------
 
+
+website_route_rules = [
+    {"from_route": "/todo/<path:app_path>", "to_route": "todo"},
+]
+
+
+override_whitelisted_methods = {
+    "frappe.www.login.login": "todo_app.utils.login"
+}
+
+
+# Boot session
+boot_session = "todo_app.boot.boot_session"
+
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
