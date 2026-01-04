@@ -1,3 +1,5 @@
+<!-- frappe-bench/apps/todo_app/frontend/src/pages/Profile.vue -->
+
 <template>
   <div class="p-8">
     <h1 class="text-3xl font-bold text-gray-900 mb-8">Profile</h1>

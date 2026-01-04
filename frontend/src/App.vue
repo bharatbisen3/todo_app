@@ -32,13 +32,13 @@ import MobileLayout from '@/components/MobileLayout.vue'
   <Sidebar />
 </template>
 
-<!-- 
+
 <script setup>
 import Sidebar from '@/components/Sidebar.vue'
 </script>
- -->
 
 
+<!-- 
  <script setup>
 import { onMounted } from 'vue'
 import { useTheme } from './composables/useTheme'
@@ -48,4 +48,4 @@ const { initializeTheme } = useTheme()
 onMounted(async () => {
   await initializeTheme()
 })
-</script>
+</script> -->
