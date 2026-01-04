@@ -1,2 +1,23 @@
 @import './assets/Inter/inter.css';
 @import 'frappe-ui/src/style.css';
+
+
+
+
+
+
+/* Default CSS Variables (fallback) */
+:root {
+  /* Colors */
+  --color-primary-main: #3B82F6;
+  --color-background-primary: #FFFFFF;
+  --color-text-primary: #1F2937;
+  
+  /* Add more defaults as needed */
+}
+
+/* Apply theme variables to common elements */
+body {
+  background-color: var(--color-background-primary, #FFFFFF);
+  color: var(--color-text-primary, #1F2937);
+}
