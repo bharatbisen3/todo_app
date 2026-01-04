@@ -6,11 +6,13 @@ import fs from 'fs'
 
 const configPath = path.resolve(__dirname, '../../../sites/common_site_config.json')
 const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
-const webserver_port = config.webserver_port_map['internal.algoware.in'] || 8001
+
+// Check if webserver_port_map exists, otherwise use default port
+const webserver_port = config.webserver_port_map?.['internal.algoware.in'] || 8001
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/assets/todo_app/frontend/',  // ADD THIS LINE
+  base: '/assets/todo_app/frontend/',
   server: {
     port: 8080,
     proxy: getProxyOptions({ port: webserver_port }),
