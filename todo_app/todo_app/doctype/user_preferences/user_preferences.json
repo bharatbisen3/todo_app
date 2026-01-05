@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:user",
+ "creation": "2026-01-04 14:47:34.879284",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "column_break_lmid",
+  "theme",
+  "sidebar_collapsed",
+  "section_break_iaob",
+  "custom_settings"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "Light",
+   "fieldname": "theme",
+   "fieldtype": "Select",
+   "label": "Theme",
+   "options": "Light\nDark\nBlue\nGreen\nPurple\nCustom"
+  },
+  {
+   "default": "0",
+   "fieldname": "sidebar_collapsed",
+   "fieldtype": "Check",
+   "label": "Sidebar Collapsed"
+  },
+  {
+   "fieldname": "column_break_lmid",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_iaob",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "custom_settings",
+   "fieldtype": "JSON",
+   "label": "Custom Settings"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-04 15:06:08.978848",
+ "modified_by": "Administrator",
+ "module": "Todo App",
+ "name": "User Preferences",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

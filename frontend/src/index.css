@@ -5,17 +5,37 @@
 
 
 
-
-/* Default CSS Variables (fallback) */
-/* :root {
-  --color-primary-main: #3B82F6;
-  --color-background-primary: #FFFFFF;
-  --color-text-primary: #1F2937;
+/* Add CSS variables for theming */
+:root {
+  /* Default light theme values */
+  --color-bgPrimary: #ffffff;
+  --color-bgSecondary: #f3f4f6;
+  --color-bgTertiary: #e5e7eb;
   
-} */
+  --color-textPrimary: #111827;
+  --color-textSecondary: #6b7280;
+  --color-textTertiary: #9ca3af;
+  
+  --color-border: #e5e7eb;
+  --color-borderHover: #d1d5db;
+  
+  --color-accent: #3b82f6;
+  --color-accentHover: #2563eb;
+  --color-accentLight: #dbeafe;
+  
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+  
+  --color-shadow: rgba(0, 0, 0, 0.1);
+}
 
-/* Apply theme variables to common elements */
-/* body {
-  background-color: var(--color-background-primary, #FFFFFF);
-  color: var(--color-text-primary, #1F2937);
-} */
+/* Apply theme colors to common elements */
+body {
+  background-color: var(--color-bgSecondary);
+  color: var(--color-textPrimary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Update your existing Tailwind classes to use CSS variables where needed */

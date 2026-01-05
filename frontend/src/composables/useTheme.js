@@ -1,111 +1,73 @@
-import { ref, watch, onMounted } from 'vue'
+import { ref } from 'vue'
 import { call } from 'frappe-ui'
+import { getTheme } from '@/config/themes'
 
 const currentTheme = ref('light')
-const isLoading = ref(false)
+const themeLoaded = ref(false)
 
 export function useTheme() {
   
-  // Apply CSS variables to document
-  const applyTheme = (cssVariables) => {
+  // Apply theme to DOM
+  function applyTheme(themeName) {
+    const theme = getTheme(themeName)
     const root = document.documentElement
     
-    // Remove old variables
-    Object.keys(root.style).forEach(key => {
-      if (key.startsWith('--')) {
-        root.style.removeProperty(key)
-      }
+    // Apply CSS variables
+    Object.entries(theme.colors).forEach(([key, value]) => {
+      root.style.setProperty(`--theme-${key}`, value)
     })
     
-    // Apply new variables
-    Object.entries(cssVariables).forEach(([key, value]) => {
-      root.style.setProperty(key, value)
-    })
+    // Store theme name
+    root.setAttribute('data-theme', themeName.toLowerCase())
+    currentTheme.value = themeName.toLowerCase()
+    
+    console.log('✅ Theme applied:', themeName)
   }
   
-  // Load theme from backend
-  const loadTheme = async (themeKey) => {
-    isLoading.value = true
+  // Load user preferences
+  async function loadTheme() {
     try {
-      const properties = await call('theme_master.api.get_theme_properties', {
-        theme_key: themeKey
-      })
+      console.log('🔄 Loading theme...')
+      const preferences = await call('todo_app.api.get_user_preferences')
+      console.log('📥 Preferences:', preferences)
       
-      applyTheme(properties)
-      currentTheme.value = themeKey
-      
-      // Save to localStorage
-      localStorage.setItem('selected_theme', themeKey)
-      
-      return true
+      if (preferences?.theme) {
+        applyTheme(preferences.theme.toLowerCase())
+      } else {
+        applyTheme('light')
+      }
     } catch (error) {
-      console.error('Error loading theme:', error)
-      return false
+      console.error('❌ Error loading theme:', error)
+      applyTheme('light')
     } finally {
-      isLoading.value = false
+      themeLoaded.value = true
     }
   }
   
-  // Get available themes
-  const getAvailableThemes = async () => {
+  // Change theme
+  async function changeTheme(themeName) {
+    console.log('🎨 Changing theme to:', themeName)
+    applyTheme(themeName)
+    
     try {
-      const themes = await call('theme_master.api.get_available_themes')
-      return themes
-    } catch (error) {
-      console.error('Error fetching themes:', error)
-      return []
-    }
-  }
-  
-  // Save user preference
-  const saveUserTheme = async (themeKey) => {
-    try {
-      await call('theme_master.api.save_user_theme', {
-        theme_key: themeKey
+      const result = await call('todo_app.api.update_user_preferences', {
+        theme: themeName.charAt(0).toUpperCase() + themeName.slice(1)
       })
-      return true
+      console.log('💾 Saved:', result)
     } catch (error) {
-      console.error('Error saving theme:', error)
-      return false
+      console.error('❌ Save failed:', error)
     }
   }
   
-  // Initialize theme on mount
-  const initializeTheme = async () => {
-    // Try localStorage first
-    const savedTheme = localStorage.getItem('selected_theme')
-    
-    if (savedTheme) {
-      await loadTheme(savedTheme)
-      return
-    }
-    
-    // Try user settings
-    try {
-      const userTheme = await call('theme_master.api.get_user_theme')
-      if (userTheme) {
-        await loadTheme(userTheme)
-        return
-      }
-    } catch (error) {
-      console.error('Error loading user theme:', error)
-    }
-    
-    // Load default theme
-    try {
-      const defaultTheme = await call('theme_master.api.get_default_theme')
-      await loadTheme(defaultTheme.theme_key)
-    } catch (error) {
-      console.error('Error loading default theme:', error)
-    }
+  // Auto-load on first use
+  if (!themeLoaded.value) {
+    loadTheme()
   }
   
   return {
     currentTheme,
-    isLoading,
-    loadTheme,
-    getAvailableThemes,
-    saveUserTheme,
-    initializeTheme
+    themeLoaded,
+    changeTheme,
+    applyTheme
   }
 }
